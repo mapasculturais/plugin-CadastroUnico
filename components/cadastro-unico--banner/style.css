@@ -1,0 +1,235 @@
+/* ==========================================================================
+   cadastro-unico--banner — estilos
+   ==========================================================================
+
+   Tarja amarela persistente do Cadastro Único 2.0 (task T19, Fatia D).
+   Aparece abaixo do header em TODAS as páginas (hook template(<<*>>.body)
+   :begin no Plugin.php).
+
+   Tokens: variáveis CSS do BaseV2 (src/themes/BaseV2/assets-src/sass/
+   0.settings/_variables.scss), com fallbacks defensivos.
+
+   POSICIONAMENTO:
+   - position: sticky; top: 64px (logo abaixo do header sticky)
+   - full-width (display: block por ser <aside>)
+   - z-index alto para não ser coberto por dropdowns do header
+
+   CONTRASTE (A11y):
+   - Fundo: var(--mc-warning-500) = #FF9F1C (amarelo/laranja)
+   - Texto: var(--mc-black) = #1E1E1E (preto)
+   - Razão de contraste: ~10:1 (muito acima de WCAG AA ≥ 4.5:1)
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   Container raiz (<aside>)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner {
+    /* Fundo amarelo de aviso — sem transparência para legibilidade máxima */
+    background: var(--mc-warning-500, #FF9F1C);
+    border-bottom: var(--mc-border-hairline, 1px solid) rgba(0, 0, 0, 0.12);
+    color: var(--mc-black, #1E1E1E);
+    /* Animação de entrada suave (desabilitada em prefers-reduced-motion) */
+    animation: cadastro-unico--banner-slide-down 0.2s ease-out;
+    position: sticky;
+    /* top = altura do header sticky do BaseV2 (~64px). Como não há token
+       --mc-header-height definido no BaseV2 atual, uso fallback defensivo.
+       Se o header do tema do cliente for mais alto, ajustar este valor
+       (ou expor token --mc-header-height no :root). */
+    top: 64px;
+    z-index: 900;
+}
+
+
+/* --------------------------------------------------------------------------
+   Conteúdo interno (limita largura, distribui ícone | mensagem | fechar)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner__content {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+    margin: 0 auto;
+    max-width: 1170px;
+    padding: 0.75rem 1.25rem;
+}
+
+
+/* --------------------------------------------------------------------------
+   Ícone de aviso (sempre presente — cor + ícone + texto, nunca só cor)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner__icon {
+    color: var(--mc-black, #1E1E1E);
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    /* Ícone decorativo — aria-hidden no template; cor vem do elemento pai */
+}
+
+
+/* --------------------------------------------------------------------------
+   Mensagem + CTA
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner__message {
+    align-items: center;
+    color: var(--mc-black, #1E1E1E);
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    font-size: var(--mc-font-size-xs, 1rem);
+    font-weight: var(--mc-font-semibold, 600);
+    gap: 0.5rem;
+    line-height: 1.4;
+    margin: 0;
+    min-width: 0;
+}
+
+.cadastro-unico--banner__text {
+    flex: 0 1 auto;
+    /* Permite que o texto quebre em múltiplas linhas em telas estreitas
+       sem empurrar o CTA para fora da viewport */
+    min-width: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   CTA — link para /cadastro-unico (mesma cor/destaque em todas condições)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner__cta {
+    /* Override do estilo padrão de <a> via mc-link (herda classes) */
+    background: var(--mc-black, #1E1E1E);
+    border-radius: var(--mc-border-radius-pill, 64px);
+    color: var(--mc-white, #FFFFFF);
+    display: inline-block;
+    flex-shrink: 0;
+    font-size: var(--mc-font-size-xxs, 0.875rem);
+    font-weight: var(--mc-font-bold, 700);
+    line-height: 1.4;
+    padding: 0.25rem 0.875rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.cadastro-unico--banner__cta:hover {
+    background: var(--mc-gray-700, #4E4E4E);
+    text-decoration: none;
+}
+
+.cadastro-unico--banner__cta:focus-visible {
+    /* Foco visível acessível (WCAG 2.4.7) — outline distinto do fundo */
+    outline: 2px solid var(--mc-black, #1E1E1E);
+    outline-offset: 2px;
+}
+
+.cadastro-unico--banner__cta:active {
+    transform: translateY(1px);
+}
+
+
+/* --------------------------------------------------------------------------
+   Botão fechar (X) — dismiss (DT-14: estado em memória, sem persistência)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--banner__close {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: var(--mc-border-radius-xs, 4px);
+    color: var(--mc-black, #1E1E1E);
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    height: 2rem;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.15s ease;
+    width: 2rem;
+}
+
+.cadastro-unico--banner__close:hover {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.cadastro-unico--banner__close:focus-visible {
+    /* Foco visível (WCAG 2.4.7) — outline acessível mesmo sobre amarelo */
+    outline: 2px solid var(--mc-black, #1E1E1E);
+    outline-offset: 1px;
+}
+
+
+/* --------------------------------------------------------------------------
+   Animação de entrada (slide-down) — desabilitada em prefers-reduced-motion
+   -------------------------------------------------------------------------- */
+@keyframes cadastro-unico--banner-slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   Responsividade — mobile (< 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+    .cadastro-unico--banner__content {
+        /* No mobile, layout em coluna para acomodar texto longo + CTA */
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .cadastro-unico--banner__icon {
+        /* Ícone no topo da coluna no mobile */
+        align-self: flex-start;
+    }
+
+    .cadastro-unico--banner__message {
+        /* Ocupa largura total, quebra naturalmente */
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    /* Botão fechar no topo-direita (absolute) para não competir com CTA */
+    .cadastro-unico--banner__close {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+}
+
+/* Posicionamento absolute do botão fechar no mobile requer position:relative
+   no container pai */
+@media (max-width: 767px) {
+    .cadastro-unico--banner__content {
+        position: relative;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   Acessibilidade — movimento reduzido (desabilita animações)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .cadastro-unico--banner {
+        animation: none;
+    }
+
+    .cadastro-unico--banner__cta,
+    .cadastro-unico--banner__close {
+        transition: none;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   Print — ocultar a tarja (não tem sentido em impressão)
+   -------------------------------------------------------------------------- */
+@media print {
+    .cadastro-unico--banner {
+        display: none !important;
+    }
+}

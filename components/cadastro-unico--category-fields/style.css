@@ -1,0 +1,61 @@
+
+.cadastro-unico--category-fields {
+}
+
+
+/* --------------------------------------------------------------------------
+   Lista de campos (entity-field / entity-file)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--category-fields__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.cadastro-unico--category-fields__list > .field,
+.cadastro-unico--category-fields__list > .entity-file {
+    margin: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   CTA inline dentro do mc-alert de "sem inscrição"
+   -------------------------------------------------------------------------- */
+.cadastro-unico--category-fields__cta {
+    background: var(--mc-primary-500, #117C83);
+    border-radius: var(--mc-border-radius-pill, 64px);
+    color: var(--mc-white, #FFFFFF);
+    display: inline-block;
+    font-size: var(--mc-font-size-xxs, 0.875rem);
+    font-weight: var(--mc-font-bold, 700);
+    margin-left: 0.5rem;
+    padding: 0.25rem 0.875rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.cadastro-unico--category-fields__cta:hover {
+    background: var(--mc-primary-700, darker);
+    text-decoration: none;
+}
+
+.cadastro-unico--category-fields__cta:focus-visible {
+    outline: 2px solid var(--mc-black, #1E1E1E);
+    outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   Responsividade — mobile (< 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+    .cadastro-unico--category-fields__list {
+        gap: 0.875rem;
+    }
+
+    .cadastro-unico--category-fields__cta {
+        display: block;
+        margin: 0.5rem 0 0 0;
+        text-align: center;
+    }
+}
