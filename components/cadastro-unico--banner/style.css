@@ -1,26 +1,3 @@
-/* ==========================================================================
-   cadastro-unico--banner — estilos
-   ==========================================================================
-
-   Tarja amarela persistente do Cadastro Único 2.0 (task T19, Fatia D).
-   Aparece abaixo do header em TODAS as páginas (hook template(<<*>>.body)
-   :begin no Plugin.php).
-
-   Tokens: variáveis CSS do BaseV2 (src/themes/BaseV2/assets-src/sass/
-   0.settings/_variables.scss), com fallbacks defensivos.
-
-   POSICIONAMENTO:
-   - position: sticky; top: 64px (logo abaixo do header sticky)
-   - full-width (display: block por ser <aside>)
-   - z-index alto para não ser coberto por dropdowns do header
-
-   CONTRASTE (A11y):
-   - Fundo: var(--mc-warning-500) = #FF9F1C (amarelo/laranja)
-   - Texto: var(--mc-black) = #1E1E1E (preto)
-   - Razão de contraste: ~10:1 (muito acima de WCAG AA ≥ 4.5:1)
-   ========================================================================== */
-
-
 /* --------------------------------------------------------------------------
    Container raiz (<aside>)
    -------------------------------------------------------------------------- */
@@ -31,12 +8,7 @@
     color: var(--mc-black, #1E1E1E);
     /* Animação de entrada suave (desabilitada em prefers-reduced-motion) */
     animation: cadastro-unico--banner-slide-down 0.2s ease-out;
-    position: sticky;
-    /* top = altura do header sticky do BaseV2 (~64px). Como não há token
-       --mc-header-height definido no BaseV2 atual, uso fallback defensivo.
-       Se o header do tema do cliente for mais alto, ajustar este valor
-       (ou expor token --mc-header-height no :root). */
-    top: 64px;
+    position: relative;
     z-index: 900;
 }
 
