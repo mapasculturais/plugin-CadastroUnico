@@ -122,12 +122,14 @@ $this->import('
     <?php $this->applyTemplateHook('cadastro-unico-single-header', 'before') ?>
     <header class="cadastro-unico__header">
         <?php $this->applyTemplateHook('cadastro-unico-single-header', 'begin') ?>
-        <h1 class="cadastro-unico__title">
-            <?= i::__('Cadastro único') ?>
-        </h1>
-        <p class="cadastro-unico__subtitle">
-            <?= i::__('Centralize seus documentos por categoria. Abra cada seção para gerenciar suas certidões, documentos obrigatórios e autodeclarações.') ?>
-        </p>
+        <div class="cadastro-unico__header-inner">
+            <h1 class="cadastro-unico__title">
+                <?= i::__('Cadastro único') ?>
+            </h1>
+            <p class="cadastro-unico__subtitle">
+                <?= i::__('Centralize seus documentos por categoria. Abra cada seção para gerenciar suas certidões, documentos obrigatórios e autodeclarações.') ?>
+            </p>
+        </div>
         <?php $this->applyTemplateHook('cadastro-unico-single-header', 'end') ?>
     </header>
     <?php $this->applyTemplateHook('cadastro-unico-single-header', 'after') ?>
