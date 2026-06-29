@@ -1,61 +1,107 @@
-
 .cadastro-unico--category-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
+/* --------------------------------------------------------------------------
+   Estado vazio — card informativo com CTA primário
+   -------------------------------------------------------------------------- */
+.cadastro-unico--category-fields__empty {
+    align-items: flex-start;
+    background: var(--mc-white, #FFFFFF);
+    border: var(--mc-border-hairline, 1px solid) var(--mc-gray-300, #C4C4C4);
+    border-radius: var(--mc-border-radius-sm, 8px);
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.cadastro-unico--category-fields__empty-icon {
+    align-items: center;
+    background: var(--mc-helper-500, #0074C1);
+    border-radius: 50%;
+    color: var(--mc-white, #FFFFFF);
+    display: flex;
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    height: 2.5rem;
+    justify-content: center;
+    width: 2.5rem;
+}
+
+.cadastro-unico--category-fields__empty-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cadastro-unico--category-fields__empty-title {
+    color: var(--mc-black, #1E1E1E);
+    font-size: var(--mc-font-size-sm, 1.125rem);
+    font-weight: var(--mc-font-bold, 700);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.cadastro-unico--category-fields__empty-text {
+    color: var(--mc-gray-700, #4E4E4E);
+    font-size: var(--mc-font-size-xs, 1rem);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.cadastro-unico--category-fields__cta {
+    align-self: flex-start;
+}
 
 /* --------------------------------------------------------------------------
-   Lista de campos (entity-field / entity-file)
+   Alertas internos (sucesso/aviso)
+   -------------------------------------------------------------------------- */
+.cadastro-unico--category-fields__alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Lista de campos do formulário
    -------------------------------------------------------------------------- */
 .cadastro-unico--category-fields__list {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
-    margin-top: 0.5rem;
 }
 
 .cadastro-unico--category-fields__list > .field,
 .cadastro-unico--category-fields__list > .entity-file {
-    margin: 0;
+    background: var(--mc-white, #FFFFFF);
+    border: var(--mc-border-hairline, 1px solid) var(--mc-gray-300, #C4C4C4);
+    border-radius: var(--mc-border-radius-sm, 8px);
+    padding: 1rem;
 }
 
-
-/* --------------------------------------------------------------------------
-   CTA inline dentro do mc-alert de "sem inscrição"
-   -------------------------------------------------------------------------- */
-.cadastro-unico--category-fields__cta {
-    background: var(--mc-primary-500, #117C83);
-    border-radius: var(--mc-border-radius-pill, 64px);
-    color: var(--mc-white, #FFFFFF);
-    display: inline-block;
-    font-size: var(--mc-font-size-xxs, 0.875rem);
-    font-weight: var(--mc-font-bold, 700);
-    margin-left: 0.5rem;
-    padding: 0.25rem 0.875rem;
-    text-decoration: none;
-    transition: background-color 0.15s ease;
+.cadastro-unico--category-fields__list > .field:first-child,
+.cadastro-unico--category-fields__list > .entity-file:first-child {
+    margin-top: 0;
 }
-
-.cadastro-unico--category-fields__cta:hover {
-    background: var(--mc-primary-700, darker);
-    text-decoration: none;
-}
-
-.cadastro-unico--category-fields__cta:focus-visible {
-    outline: 2px solid var(--mc-black, #1E1E1E);
-    outline-offset: 2px;
-}
-
 
 /* --------------------------------------------------------------------------
    Responsividade — mobile (< 768px)
    -------------------------------------------------------------------------- */
 @media (max-width: 767px) {
-    .cadastro-unico--category-fields__list {
-        gap: 0.875rem;
+    .cadastro-unico--category-fields__empty {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
     }
 
     .cadastro-unico--category-fields__cta {
-        display: block;
-        margin: 0.5rem 0 0 0;
-        text-align: center;
+        align-self: stretch;
+    }
+
+    .cadastro-unico--category-fields__list > .field,
+    .cadastro-unico--category-fields__list > .entity-file {
+        padding: 0.875rem;
     }
 }

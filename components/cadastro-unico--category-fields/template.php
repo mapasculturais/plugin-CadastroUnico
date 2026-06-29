@@ -21,27 +21,39 @@ $this->import('
 <div class="cadastro-unico--category-fields">
     <mc-loading :condition="!ready"></mc-loading>
 
-    <mc-alert v-if="ready && !hasRegistration" type="helper">
-        <?= i::__('Você ainda não iniciou esta categoria.') ?>
-        <mc-link route="cadastroUnico/createRegistration" :get-params="{category: categorySlug}" class="cadastro-unico--category-fields__cta">
-            <?= i::__('Começar agora') ?>
-        </mc-link>
-    </mc-alert>
+    <div v-if="ready && !hasRegistration" class="cadastro-unico--category-fields__empty">
+        <div class="cadastro-unico--category-fields__empty-icon">
+            <mc-icon name="info-full"></mc-icon>
+        </div>
+        <div class="cadastro-unico--category-fields__empty-content">
+            <p class="cadastro-unico--category-fields__empty-title">
+                <?= i::__('Você ainda não iniciou esta categoria.') ?>
+            </p>
+            <p class="cadastro-unico--category-fields__empty-text">
+                <?= i::__('Inicie o preenchimento para gerenciar seus documentos nesta categoria.') ?>
+            </p>
+            <mc-link route="cadastroUnico/createRegistration" :get-params="{category: categorySlug}" class="cadastro-unico--category-fields__cta button button--primary">
+                <?= i::__('Começar agora') ?>
+            </mc-link>
+        </div>
+    </div>
 
     <template v-if="ready && hasRegistration">
-        <mc-alert
-            v-if="allFieldsValid"
-            type="success"
-        >
-            <?= i::__('Tudo certo! Não há nada a atualizar nesta categoria.') ?>
-        </mc-alert>
+        <div class="cadastro-unico--category-fields__alerts">
+            <mc-alert
+                v-if="allFieldsValid"
+                type="success"
+            >
+                <?= i::__('Tudo certo! Não há nada a atualizar nesta categoria.') ?>
+            </mc-alert>
 
-        <mc-alert
-            v-if="hasEditableFields && !allFieldsValid"
-            type="warning"
-        >
-            <?= i::__('Há campos a atualizar nesta categoria. Campos válidos estão bloqueados para edição.') ?>
-        </mc-alert>
+            <mc-alert
+                v-if="hasEditableFields && !allFieldsValid"
+                type="warning"
+            >
+                <?= i::__('Há campos a atualizar nesta categoria. Campos válidos estão bloqueados para edição.') ?>
+            </mc-alert>
+        </div>
 
         <div class="cadastro-unico--category-fields__list">
             <template v-for="field in fieldsConfig" :key="field.id">
