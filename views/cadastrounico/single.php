@@ -1,16 +1,13 @@
 <?php
 /**
-
- * @package CadastroUnico2
  *
  * @var \MapasCulturais\App                                           $app
  * @var \MapasCulturais\Themes\BaseV2\Theme                           $this
  * @var array                                                         $breadcrumb
- *      Pré-computado pelo controller (Controllers\CadastroUnico::GET_single).
  */
 
-use CadastroUnico2\Services\CadastroUnicoService;
-use CadastroUnico2\Setup;
+use CadastroUnico\Entities\CadastroUnicoService;
+use CadastroUnico\Setup;
 use MapasCulturais\i;
 
 $this->layout = 'default';

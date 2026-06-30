@@ -1,31 +1,5 @@
 <?php
-/**
- * Cadastro Único 2.0 — Constantes canônicas e contrato crítico.
- *
- * Esta classe NÃO contém lógica de seed — TODO o código de instalação
- * vive inline em db-updates.php (padrão do MapasCulturais). A classe
- * existe apenas como repositório centralizado das constantes de
- * categoria consumidas por Plugin.php, Services/CadastroUnicoService,
- * views e components.
- *
- * CONTRATO CRÍTICO (DT-12) — não criado no seed, mas documentado aqui:
- *   Quando o admin criar os campos @ no form builder (após install) e
- *   configurar a expiração por campo na edição do selo, o sistema exige:
- *
- *     SealRelationField.fieldName === "agent." + RegistrationFieldConfiguration.config.entityField
- *
- *   Exemplo: campo @ com config.entityField = "documento"
- *            → Seal.lockedFieldsConfig deve ter a chave "agent.documento"
- *            → SealRelationField.fieldName será "agent.documento"
- *
- *   Esta correspondência é o que conecta o formulário de inscrição ao
- *   status do selo. É configurado pelo admin via UI (form builder +
- *   edição de selo), NÃO pelo seed.
- *
- * @package CadastroUnico2
- */
-
-namespace CadastroUnico2;
+namespace CadastroUnico;
 
 use MapasCulturais\App;
 use MapasCulturais\Entities\Agent;
@@ -36,24 +10,10 @@ use MapasCulturais\i;
 
 class Setup
 {
-    /**
-     * Slugs canônicos das categorias (chaves de cadastroUnicoCategorySeals).
-     * Também usados como valores do metadata Seal.isCadastroUnico2Category.
-     */
     public const CATEGORY_CERTIDOES = 'certidoes';
     public const CATEGORY_DOCUMENTOS = 'documentos';
     public const CATEGORY_AUTODECLARACOES = 'autodeclaracoes';
 
-    /**
-     * Rótulos legíveis das categorias (também usados como nomes das
-     * categorias de inscrição em Opportunity.registrationCategories e como
-     * nomes dos 3 selos criados).
-     *
-     * NOTA: o slug interno (key) é distinto do label exibido (value) porque
-     * o metadata isCadastroUnico2Category usa slug (estável a renomeações
-     * de UI/i18n), enquanto registrationCategories usa o label diretamente
-     * (o core do MapasCulturais casa por string exata).
-     */
     public const CATEGORIES = [
         self::CATEGORY_CERTIDOES => 'Certidões',
         self::CATEGORY_DOCUMENTOS => 'Documentos obrigatórios',
@@ -61,7 +21,7 @@ class Setup
     ];
 
     /**
-     * Seed determinístico do Cadastro Único 2.0.
+     * Seed determinístico do Cadastro Único.
      *
      * Cria (de forma idempotente) a oportunidade única, os 3 selos e o mapa
      * categoria↔selo. É o single source of truth entre produção (db-update)
@@ -89,7 +49,7 @@ class Setup
             "SELECT o.id
              FROM opportunity o
              INNER JOIN opportunity_meta om ON om.object_id = o.id
-             WHERE om.key = 'isCadastroUnico2' AND om.value = '1'
+             WHERE om.key = 'isCadastroUnico' AND om.value = '1'
              LIMIT 1"
         );
 
@@ -101,7 +61,7 @@ class Setup
         // Resolver agente admin
         // ============================================================
         if (!$admin_agent) {
-            $plugin = $app->plugins['CadastroUnico2'] ?? null;
+            $plugin = $app->plugins['CadastroUnico'] ?? null;
             $owner_agent_id = $plugin ? ($plugin->config['ownerAgentId'] ?? null) : null;
 
             if ($owner_agent_id) {
@@ -128,7 +88,7 @@ class Setup
 
         if (!$admin_agent) {
             throw new \RuntimeException(
-                '[CadastroUnico2] Nenhum agente administrador encontrado para ser owner da oportunidade. ' .
+                '[CadastroUnico] Nenhum agente administrador encontrado para ser owner da oportunidade. ' .
                 'Verifique se existe ao menos um usuário com role saasSuperAdmin, saasAdmin, superAdmin ou admin.'
             );
         }
@@ -157,7 +117,7 @@ class Setup
                     "SELECT s.id
                      FROM seal s
                      INNER JOIN seal_meta sm ON sm.object_id = s.id
-                     WHERE sm.key = 'isCadastroUnico2Category' AND sm.value = " . $conn->quote($slug) . "
+                     WHERE sm.key = 'isCadastroUnicoCategory' AND sm.value = " . $conn->quote($slug) . "
                      LIMIT 1"
                 );
 
@@ -170,12 +130,12 @@ class Setup
                 $seal->owner = $admin_agent;
                 $seal->name = $label;
                 $seal->shortDescription = sprintf(
-                    i::__('Selo automático da categoria "%s" do Cadastro Único 2.0.'),
+                    i::__('Selo automático da categoria "%s" do Cadastro Único.'),
                     $label
                 );
                 $seal->validPeriod = 0;
                 $seal->lockedFieldsConfig = [];
-                $seal->isCadastroUnico2Category = $slug;
+                $seal->isCadastroUnicoCategory = $slug;
                 $seal->save(true);
 
                 $seals_by_slug[$slug] = $seal;
@@ -200,7 +160,7 @@ class Setup
 
             $opportunity->publishedRegistrations = true;
             $opportunity->status = Opportunity::STATUS_ENABLED;
-            $opportunity->isCadastroUnico2 = true;
+            $opportunity->isCadastroUnico = true;
             $opportunity->save(true);
 
             // Garante as 3 categorias de inscrição após a criação da

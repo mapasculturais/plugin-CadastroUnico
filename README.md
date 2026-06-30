@@ -23,7 +23,7 @@
 
 ### Ativação
 
-No arquivo `config/plugins.php`, adicione `'CadastroUnico2'` à lista de plugins ativos:
+No arquivo `config/plugins.php`, adicione `'CadastroUnico'` à lista de plugins ativos:
 
 ```php
 <?php
@@ -34,7 +34,7 @@ return [
         'AdminLoginAsUser',
         'RecreatePCacheOnLogin',
         'SpamDetector',
-        'CadastroUnico2',
+        'CadastroUnico',
     ]
 ];
 ```
@@ -58,7 +58,7 @@ O seed é idempotente: pode ser executado várias vezes sem criar registros dupl
 
 ### Oportunidade e categorias
 
-O plugin cria uma única oportunidade do tipo `AgentOpportunity`, identificada pelo metadata `isCadastroUnico2 = true`. Essa oportunidade possui três categorias de inscrição:
+O plugin cria uma única oportunidade do tipo `AgentOpportunity`, identificada pelo metadata `isCadastroUnico = true`. Essa oportunidade possui três categorias de inscrição:
 
 | Categoria        | Slug              |
 |------------------|-------------------|
@@ -109,7 +109,7 @@ WHERE status >= 0 AND opportunity_id = <id_da_oportunidade>
 
 ### Ocultação em listagens públicas
 
-A oportunidade do Cadastro Único não aparece em listagens públicas de oportunidades. O plugin aplica um filtro automático nas consultas da API para excluir registros marcados com `isCadastroUnico2 = true` quando o usuário não tem permissão de controle sobre eles.
+A oportunidade do Cadastro Único não aparece em listagens públicas de oportunidades. O plugin aplica um filtro automático nas consultas da API para excluir registros marcados com `isCadastroUnico = true` quando o usuário não tem permissão de controle sobre eles.
 
 ## Personalização
 
@@ -122,8 +122,8 @@ Por padrão, o plugin busca automaticamente um agente administrador para ser o p
 
 return [
     'plugins' => [
-        'CadastroUnico2' => [
-            'namespace' => 'CadastroUnico2',
+        'CadastroUnico' => [
+            'namespace' => 'CadastroUnico',
             'config' => [
                 'ownerAgentId' => 1,
             ]

@@ -1,11 +1,5 @@
 <?php
-/**
- *
- * @package    CadastroUnico2
- * @subpackage Services
- */
-
-namespace CadastroUnico2\Services;
+namespace CadastroUnico\Entities;
 
 use MapasCulturais\App;
 
@@ -53,7 +47,7 @@ class OpportunityVisibilityFilter
      * Aplica o filtro de não-listagem pública em uma ApiQuery de Opportunity.
      *
      * Em contexto público, adiciona uma cláusula DQL que exclui oportunidades
-     * marcadas com o metadata `isCadastroUnico2 = '1'`.
+     * marcadas com o metadata `isCadastroUnico = '1'`.
      *
      * @param App    $app
      * @param string $query String DQL passada por referência pelo hook
@@ -70,7 +64,7 @@ class OpportunityVisibilityFilter
         $where .= " AND NOT EXISTS (
             SELECT 1 FROM MapasCulturais\\Entities\\OpportunityMeta om_filter
             WHERE om_filter.owner = e
-            AND om_filter.key = 'isCadastroUnico2'
+            AND om_filter.key = 'isCadastroUnico'
             AND om_filter.value = '1'
         )";
 

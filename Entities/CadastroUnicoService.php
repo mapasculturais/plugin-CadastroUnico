@@ -1,6 +1,6 @@
 <?php
 /**
- * Cadastro Único 2.0 — Service canônico de status (single source of truth).
+ * Cadastro Único — Service canônico de status (single source of truth).
  *
  * Centraliza TODA a lógica de computação do status consolidado do Cadastro
  * Único de um agente. É consumido por 3 superfícies sem duplicação:
@@ -48,13 +48,13 @@
  * insert/remove/update). O endpoint e o init.php NÃO usam cache (sempre
  * frescos); apenas a tarja lê do cache.
  *
- * @package    CadastroUnico2
- * @subpackage Services
+ * @package    CadastroUnico
+ * @subpackage Entities
  */
 
-namespace CadastroUnico2\Services;
+namespace CadastroUnico\Entities;
 
-use CadastroUnico2\Setup;
+use CadastroUnico\Setup;
 use MapasCulturais\App;
 use MapasCulturais\Entities\Agent;
 use MapasCulturais\Entities\AgentSealRelation;
@@ -188,13 +188,13 @@ class CadastroUnicoService
 
 
     /**
-     * Localiza a oportunidade do Cadastro Único 2.0.
+     * Localiza a oportunidade do Cadastro Único.
      *
      * Única por instalação (idempotência do seed — DT-03).
      *
      * Implementação: query em opportunity_meta (NÃO findOneBy no repo
      * Opportunity com chave de metadata — isso gera UnrecognizedField
-     * porque isCadastroUnico2 é metadata, não coluna Doctrine).
+     * porque isCadastroUnico é metadata, não coluna Doctrine).
      *
      * @return Opportunity|null null se plugin ainda não instalado
      *                          (db-update não rodou) ou oportunidade
@@ -207,7 +207,7 @@ class CadastroUnicoService
             "SELECT o.id
              FROM opportunity o
              INNER JOIN opportunity_meta om ON om.object_id = o.id
-             WHERE om.key = 'isCadastroUnico2' AND om.value = '1'
+             WHERE om.key = 'isCadastroUnico' AND om.value = '1'
              LIMIT 1"
         );
 
@@ -219,7 +219,7 @@ class CadastroUnicoService
     }
 
     /**
-     * Localiza o selo de uma categoria do Cadastro Único 2.0.
+     * Localiza o selo de uma categoria do Cadastro Único.
      *
      * @param App    $app
      * @param string $slug Slug da categoria (Setup::CATEGORY_*).
@@ -233,7 +233,7 @@ class CadastroUnicoService
             "SELECT s.id
              FROM seal s
              INNER JOIN seal_meta sm ON sm.object_id = s.id
-             WHERE sm.key = 'isCadastroUnico2Category' AND sm.value = " . $conn->quote($slug) . "
+             WHERE sm.key = 'isCadastroUnicoCategory' AND sm.value = " . $conn->quote($slug) . "
              LIMIT 1"
         );
 
@@ -773,7 +773,7 @@ class CadastroUnicoService
         }
 
         $opportunity = $registration->opportunity;
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return $default_editable;
         }
 

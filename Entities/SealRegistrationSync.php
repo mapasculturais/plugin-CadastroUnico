@@ -1,13 +1,8 @@
 <?php
-/**
- * @package    CadastroUnico2
- * @subpackage Services
- */
-
-namespace CadastroUnico2\Services;
+namespace CadastroUnico\Entities;
 
 use Closure;
-use CadastroUnico2\Setup;
+use CadastroUnico\Setup;
 use MapasCulturais\App;
 use MapasCulturais\Entities\Agent;
 use MapasCulturais\Entities\AgentSealRelation;
@@ -52,7 +47,7 @@ class SealRegistrationSync
         ?object &$opportunityMetadataSeals = null
     ): void {
         $opportunity = $registration->opportunity;
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return;
         }
 
@@ -142,7 +137,7 @@ class SealRegistrationSync
             self::populateAgentFieldsFromOwner($registration, $agent, $app);
         } catch (\Throwable $e) {
             $app->log->error(sprintf(
-                '[CadastroUnico2] F3 (syncSealToRegistration) falhou: %s | %s:%d',
+                '[CadastroUnico] F3 (syncSealToRegistration) falhou: %s | %s:%d',
                 $e->getMessage(),
                 $e->getFile(),
                 $e->getLine()
@@ -205,7 +200,7 @@ class SealRegistrationSync
             }
         } catch (\Throwable $e) {
             $app->log->error(sprintf(
-                '[CadastroUnico2] F4 (syncSealRemovalToRegistration) falhou: %s | %s:%d',
+                '[CadastroUnico] F4 (syncSealRemovalToRegistration) falhou: %s | %s:%d',
                 $e->getMessage(),
                 $e->getFile(),
                 $e->getLine()
@@ -234,7 +229,7 @@ class SealRegistrationSync
         }
 
         $opportunity = $registration->opportunity;
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return;
         }
 
@@ -274,7 +269,7 @@ class SealRegistrationSync
         App $app
     ): void {
         $opportunity = $registration->opportunity;
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return;
         }
 
@@ -312,7 +307,7 @@ class SealRegistrationSync
     public static function resolveSealIdForRegistration(Registration $registration, App $app): ?int
     {
         $opportunity = $registration->opportunity;
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return null;
         }
 
@@ -340,7 +335,7 @@ class SealRegistrationSync
      */
     public static function findCategoryBySeal(App $app, Seal $seal): ?array
     {
-        $slug = $seal->isCadastroUnico2Category ?? null;
+        $slug = $seal->isCadastroUnicoCategory ?? null;
         if (!$slug || !isset(Setup::CATEGORIES[$slug])) {
             return null;
         }
@@ -405,7 +400,7 @@ class SealRegistrationSync
         $app = App::i();
         $opportunity = $registration->opportunity;
 
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return;
         }
 
@@ -454,7 +449,7 @@ class SealRegistrationSync
         $app = App::i();
         $opportunity = $registration->opportunity;
 
-        if (!$opportunity || !$opportunity->isCadastroUnico2) {
+        if (!$opportunity || !$opportunity->isCadastroUnico) {
             return;
         }
 
@@ -571,7 +566,7 @@ class SealRegistrationSync
                 );
             } catch (\Throwable $e) {
                 $app->log->debug(sprintf(
-                    '[CadastroUnico2] fetchFromEntity falhou para %s: %s',
+                    '[CadastroUnico] fetchFromEntity falhou para %s: %s',
                     $field_name,
                     $e->getMessage()
                 ));

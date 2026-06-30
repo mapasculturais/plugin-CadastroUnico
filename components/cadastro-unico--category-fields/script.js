@@ -65,7 +65,7 @@ app.component('cadastro-unico--category-fields', {
                 }
                 this.registration = reg;
             } catch (e) {
-                console.error('[CadastroUnico2] Falha ao materializar inscrição:', e);
+                console.error('[CadastroUnico] Falha ao materializar inscrição:', e);
                 this.registration = null;
             }
         },

@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package CadastroUnico2
+ * @package CadastroUnico
  *
  * @var \MapasCulturais\App                                           $app
  * @var \MapasCulturais\Themes\BaseV2\Theme                           $this

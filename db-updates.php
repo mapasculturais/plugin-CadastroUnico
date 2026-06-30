@@ -1,6 +1,6 @@
 <?php
 
-use CadastroUnico2\Setup;
+use CadastroUnico\Setup;
 use MapasCulturais\App;
 
 return [
@@ -18,7 +18,7 @@ return [
             "SELECT o.id
              FROM opportunity o
              INNER JOIN opportunity_meta om ON om.object_id = o.id
-             WHERE om.key = 'isCadastroUnico2' AND om.value = '1'
+             WHERE om.key = 'isCadastroUnico' AND om.value = '1'
              LIMIT 1"
         );
 

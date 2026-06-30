@@ -1,13 +1,13 @@
 <?php
 /**
  *
- * @package CadastroUnico2
+ * @package CadastroUnico
  *
  * @var \MapasCulturais\App                                           $app
  * @var \MapasCulturais\Themes\BaseV2\Theme                           $this
  */
 
-use CadastroUnico2\Services\CadastroUnicoService;
+use CadastroUnico\Entities\CadastroUnicoService;
 use MapasCulturais\App;
 
 $app = App::i();
@@ -39,7 +39,7 @@ try {
         return;
     }
 
-    // Retorna null se plugin não instalado (sem Opportunity isCadastroUnico2).
+    // Retorna null se plugin não instalado (sem Opportunity isCadastroUnico).
     $payload = CadastroUnicoService::buildStatusPayload($app, $agent);
     if ($payload === null) {
         $this->jsObject['config']['cadastroUnicoStatus'] = $empty_payload;
@@ -51,7 +51,7 @@ try {
     // Falha isolada: painel continua funcionando, apenas sem o widget.
     // Loga para diagnóstico
     $app->log->error(sprintf(
-        '[CadastroUnico2] panel--cadastro-unico init.php falhou: %s | %s:%d',
+        '[CadastroUnico] panel--cadastro-unico init.php falhou: %s | %s:%d',
         $e->getMessage(),
         $e->getFile(),
         $e->getLine()

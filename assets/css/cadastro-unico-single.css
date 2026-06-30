@@ -1,11 +1,3 @@
-/* ==========================================================================
-   cadastro-unico single — estilos da página
-   ==========================================================================
-   Página pública de gerenciamento do Cadastro Único 2.0.
-   Segue o padrão de páginas internas do Mapas Culturais BaseV2
-   (container centralizado, header com título/subtítulo, fundo branco).
-   ========================================================================== */
-
 .controller-cadastrounico.action-single {
     background-color: var(--mc-white, #FFFFFF);
 }

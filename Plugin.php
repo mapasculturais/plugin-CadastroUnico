@@ -1,10 +1,10 @@
 <?php
-namespace CadastroUnico2;
+namespace CadastroUnico;
 
-use CadastroUnico2\Controllers\CadastroUnico;
-use CadastroUnico2\Services\CadastroUnicoService;
-use CadastroUnico2\Services\OpportunityVisibilityFilter;
-use CadastroUnico2\Services\SealRegistrationSync;
+use CadastroUnico\Controllers\CadastroUnico;
+use CadastroUnico\Entities\CadastroUnicoService;
+use CadastroUnico\Entities\OpportunityVisibilityFilter;
+use CadastroUnico\Entities\SealRegistrationSync;
 use MapasCulturais\App;
 use MapasCulturais\i;
 
@@ -32,7 +32,7 @@ class Plugin extends \MapasCulturais\Plugin
                 $app->pass();
             }
 
-            if (!$entity->isCadastroUnico2) {
+            if (!$entity->isCadastroUnico) {
                 return;
             }
 
@@ -142,7 +142,7 @@ class Plugin extends \MapasCulturais\Plugin
                     $payload = CadastroUnicoService::buildStatusPayload($app, $agent);
                 } catch (\Throwable $e) {
                     $app->log->error(sprintf(
-                        '[CadastroUnico2] tarja buildStatusPayload falhou: %s | %s:%d',
+                        '[CadastroUnico] tarja buildStatusPayload falhou: %s | %s:%d',
                         $e->getMessage(),
                         $e->getFile(),
                         $e->getLine()
@@ -190,7 +190,7 @@ class Plugin extends \MapasCulturais\Plugin
                 }
             } catch (\Throwable $e) {
                 $app->log->debug(sprintf(
-                    '[CadastroUnico2] cache invalidation (Registration) falhou: %s',
+                    '[CadastroUnico] cache invalidation (Registration) falhou: %s',
                     $e->getMessage()
                 ));
             }
@@ -211,7 +211,7 @@ class Plugin extends \MapasCulturais\Plugin
                 }
             } catch (\Throwable $e) {
                 $app->log->debug(sprintf(
-                    '[CadastroUnico2] cache invalidation (AgentSealRelation) falhou: %s',
+                    '[CadastroUnico] cache invalidation (AgentSealRelation) falhou: %s',
                     $e->getMessage()
                 ));
             }
@@ -302,26 +302,26 @@ class Plugin extends \MapasCulturais\Plugin
 
         $app->registerController('cadastroUnico', CadastroUnico::class);
 
-        $this->registerOpportunityMetadata('isCadastroUnico2', [
-            'label' => i::__('É Cadastro Único 2.0'),
+        $this->registerOpportunityMetadata('isCadastroUnico', [
+            'label' => i::__('É Cadastro Único'),
             'type' => 'boolean',
             'default' => false,
             'validations' => [
-                'v::optional(v::boolType())' => i::__('O valor de isCadastroUnico2 deve ser booleano'),
+                'v::optional(v::boolType())' => i::__('O valor de isCadastroUnico deve ser booleano'),
             ],
         ]);
 
         $this->registerOpportunityMetadata('cadastroUnicoCategorySeals', [
-            'label' => i::__('Mapa categoria → selo (Cadastro Único 2.0)'),
+            'label' => i::__('Mapa categoria → selo (Cadastro Único)'),
             'type' => 'json',
             'default' => '{}',
         ]);
 
-        $this->registerSealMetadata('isCadastroUnico2Category', [
-            'label' => i::__('Categoria do Cadastro Único 2.0'),
+        $this->registerSealMetadata('isCadastroUnicoCategory', [
+            'label' => i::__('Categoria do Cadastro Único'),
             'type' => 'select',
             'options' => [
-                '' => i::__('Não pertence ao Cadastro Único 2.0'),
+                '' => i::__('Não pertence ao Cadastro Único'),
                 Setup::CATEGORY_CERTIDOES => i::__('Certidões'),
                 Setup::CATEGORY_DOCUMENTOS => i::__('Documentos obrigatórios'),
                 Setup::CATEGORY_AUTODECLARACOES => i::__('Autodeclarações'),
