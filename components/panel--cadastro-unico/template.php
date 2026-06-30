@@ -53,7 +53,7 @@ $this->import('
     <section
         v-if="loaded && hasAnyInscricao"
         class="panel--cadastro-unico__grid"
-        :aria-label="<?= i::esc_attr_e('Status do seu cadastro único por categoria') ?>"
+        aria-label="<?= i::esc_attr_e('Status do seu cadastro único por categoria') ?>"
     >
         <header class="panel--cadastro-unico__grid-header">
             <h2 class="panel--cadastro-unico__grid-title">
@@ -88,7 +88,7 @@ $this->import('
                         <span
                             v-if="!cat.obrigatoria"
                             class="panel--cadastro-unico__category-optional-tag"
-                            :aria-label="<?= i::esc_attr_e('Categoria opcional') ?>"
+                            aria-label="<?= i::esc_attr_e('Categoria opcional') ?>"
                         >
                             <?= i::__('Opcional') ?>
                         </span>
