@@ -4,13 +4,13 @@ use CadastroUnico2\Setup;
 use MapasCulturais\App;
 
 return [
-    'cria oportunidade selos e categorias do cadastro unico 2' => function () {
+    'cria oportunidade selos e categorias do cadastro unico' => function () {
         $app = App::i();
 
         Setup::install($app, null, false);
     },
 
-    'cria indice unico de inscricao por categoria do cadastro unico 2' => function () {
+    'cria indice unico de inscricao por categoria do cadastro unico' => function () {
         $app = App::i();
         $conn = $app->em->getConnection();
 
@@ -23,7 +23,7 @@ return [
         );
 
         if (!$opportunity_id) {
-            $app->log->info('[CadastroUnico2] cria indice unico: oportunidade do Cadastro Unico ainda nao existe. Pulando.');
+            $app->log->info('[CadastroUnico] cria indice unico: oportunidade do Cadastro Unico ainda nao existe. Pulando.');
             return;
         }
 
@@ -34,7 +34,7 @@ return [
         );
 
         $app->log->info(sprintf(
-            '[CadastroUnico2] Índice registration_cadastrounico_uniq criado/verificado para opportunity_id %d.',
+            '[CadastroUnico] Índice registration_cadastrounico_uniq criado/verificado para opportunity_id %d.',
             $opportunity_id
         ));
     },
